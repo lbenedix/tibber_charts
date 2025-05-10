@@ -32,8 +32,7 @@ class BlueprintFlowHandler(config_entries.ConfigFlow, domain=DOMAIN):
         if user_input is not None:
             try:
                 await self._test_credentials(
-                    username=user_input[CONF_USERNAME],
-                    password=user_input[CONF_ACCESS_TOKEN],
+                    access_token=user_input[CONF_ACCESS_TOKEN],
                 )
             except IntegrationBlueprintApiClientAuthenticationError as exception:
                 LOGGER.warning(exception)
@@ -79,11 +78,10 @@ class BlueprintFlowHandler(config_entries.ConfigFlow, domain=DOMAIN):
             errors=_errors,
         )
 
-    async def _test_credentials(self, username: str, password: str) -> None:
+    async def _test_credentials(self, access_token: str) -> None:
         """Validate credentials."""
         client = IntegrationBlueprintApiClient(
-            username=username,
-            password=password,
+            access_token=access_token,
             session=async_create_clientsession(self.hass),
         )
         await client.async_get_data()

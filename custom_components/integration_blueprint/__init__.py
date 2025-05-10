@@ -46,7 +46,7 @@ async def async_setup_entry(
     entry.runtime_data = IntegrationBlueprintData(
         client=IntegrationBlueprintApiClient(
             username=entry.data[CONF_USERNAME],
-            password=entry.data[CONF_PASSWORD],
+            access_token=entry.data[CONF_PASSWORD],
             session=async_get_clientsession(hass),
         ),
         integration=async_get_loaded_integration(hass, entry.domain),
